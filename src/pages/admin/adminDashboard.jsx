@@ -2,6 +2,7 @@ import React from 'react';
 import Sidebar from '../../component/common/Sidebar';
 // import StatCard from '../../component/common/Sidebar';
 import { Package, Users, BarChart3, ArrowUpRight, Plus } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 const StatCard = ({ title, value, sub, icon, color }) => (
   <div className="bg-white p-6 rounded-[2rem] border border-slate-100 shadow-sm relative overflow-hidden group hover:shadow-md transition-all">
     <div className={`absolute top-0 right-0 w-24 h-24 ${color} opacity-5 -mr-8 -mt-8 rounded-full`}></div>
@@ -16,10 +17,14 @@ const StatCard = ({ title, value, sub, icon, color }) => (
   </div>
 );
 const Dashboard = () => {
+  const navigate = useNavigate();
+  const handleAddProduct = () => {
+    navigate('/admin/add-product');
+  };
   return (
     <div className="flex min-h-screen bg-slate-50 font-sans">
       {/* Sidebar - Fixed on left */}
-      <Sidebar />
+      
 
       {/* Main Content Area */}
       <main className="flex-1 p-8">
@@ -29,7 +34,7 @@ const Dashboard = () => {
             <h1 className="text-3xl font-black text-slate-900">Admin Command Center</h1>
             <p className="text-slate-500 text-sm font-medium">Monitoring Renergy's ecosystem performance.</p>
           </div>
-          <button className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-700 transition shadow-lg shadow-emerald-100">
+          <button onClick={handleAddProduct} className="bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold flex items-center gap-2 hover:bg-emerald-700 transition shadow-lg shadow-emerald-100">
             <Plus size={20} /> Add New Product
           </button>
         </header>
