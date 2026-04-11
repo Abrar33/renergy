@@ -13,7 +13,8 @@ import Signup from "../pages/signup/signup";
 import ProtectedRoute from "./ProtectedRoutes"; // Import the guard
 import NewClaim from "../component/landing/Claim";
 import DashboardLayout from "../component/layout/DashboardLayout";
-import AddProduct from "../component/common/admin/AddProduct";
+
+import AddProductWizard from "../component/common/admin/AddProduct";
 
 const AppRoutes = () => {
   return (
@@ -29,7 +30,7 @@ const AppRoutes = () => {
         </ProtectedRoute>
       }>
         <Route path="dashboard" element={<Dashboard />} />
-        <Route path="add-product" element={<AddProduct />} />
+        <Route path="add-product" element={<AddProductWizard />} />
       </Route>
       
       <Route path="/seller/dashboard" element={
