@@ -1,28 +1,41 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import { Zap, Mail, Lock, ArrowRight } from 'lucide-react';
 
 const Login = () => {
-  // --- Your Existing Logic ---
-  const { login } = useContext(AuthContext);
+  // Accessing loading, user, and role from AuthContext
+  const { login, role, user, loading } = useContext(AuthContext); 
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = (e) => {
-    e.preventDefault(); // Prevent page refresh on form submit
-    const user = login(email, password);
-
-    if (!user) return alert("Invalid credentials");
-
-    if (user.role === "admin") {
-      navigate("/admin/dashboard");
-    } else if (user.role === "seller") {
-      navigate("/seller/dashboard");
-    } else {
-      navigate("/");
+  // Redirect logic: Triggers only when loading is complete and user is authenticated
+useEffect(() => {
+  // Only attempt to navigate if loading is complete
+  if (!loading) {
+    if (user) {
+      // If user exists, check role. If role is still null (due to fetch error),
+      // fallback to a safe default or show an error
+      if (role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (role) {
+        navigate("/");
+      } else {
+        console.error("User logged in, but role is null. Check database permissions.");
+      }
+    }
+  }
+}, [user, role, loading, navigate]);
+console.log('role:', role);
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await login(email, password);
+      // Navigation is handled by the useEffect above
+    } catch (error) {
+      alert(error.message);
     }
   };
 
@@ -119,7 +132,6 @@ const Login = () => {
       {/* Right Side: Branded Visual */}
       <div className="hidden lg:block lg:w-1/2 p-8">
         <div className="h-full w-full bg-slate-900 rounded-[3rem] relative overflow-hidden flex items-center justify-center p-12">
-          {/* Decorative Glows */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/20 blur-[120px] rounded-full"></div>
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500/10 blur-[80px] rounded-full"></div>
           
