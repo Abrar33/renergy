@@ -1,11 +1,13 @@
-import { AuthProvider } from "./Context/AuthContext";
+import { useContext } from "react";
+import { AuthContext, AuthProvider } from "./Context/AuthContext";
 import AppRoutes from "./Routes/AppRoutes";
 import "./index.css";
+import Loader from "./component/layout/loader";
 function App() {
-
-  return <>
-  <AppRoutes />;
-  </>
+  const {loading} = useContext(AuthContext);
+if (loading) return <Loader/>;
+  return <AppRoutes />;
+  
 }
 
 export default App;

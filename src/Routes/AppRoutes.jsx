@@ -11,13 +11,22 @@ import Signup from "../pages/signup/signup";
 
 
 import ProtectedRoute from "./ProtectedRoutes"; // Import the guard
-import NewClaim from "../component/landing/Claim";
-import DashboardLayout from "../component/layout/DashboardLayout";
-
-import AddProductWizard from "../component/common/admin/AddProduct";
+// import NewClaim from "../component/landing/Claim";
+const NewClaim=lazy(() => import("../component/landing/Claim"));
+// import DashboardLayout from "../component/layout/DashboardLayout";
+const DashboardLayout=lazy(() => import("../component/layout/DashboardLayout"));
+// import AddProductWizard from "../component/common/admin/AddProduct";
+const AddProductWizard=lazy(() => import("../component/common/admin/AddProduct"));
+// import Staff from "../component/common/admin/Staff/Staff";
+const Staff=lazy(() => import("../component/common/admin/Staff/Staff"));
+import Loader from "../component/layout/loader";
+import { lazy, Suspense } from "react";
+import Sales from "../pages/admin/Sales/Sales";
+import Inventory from "../pages/admin/Inventory/INventory";
 
 const AppRoutes = () => {
   return (
+    <Suspense fallback={<Loader />}>
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<Login />} />
@@ -31,6 +40,9 @@ const AppRoutes = () => {
       }>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="add-product" element={<AddProductWizard />} />
+        <Route path="staff" element={<Staff/>}/>
+        <Route path="sales" element={<Sales/>}/>
+        <Route path="inventory" element={<Inventory/>}/>
       </Route>
       
       <Route path="/seller/dashboard" element={
@@ -39,6 +51,7 @@ const AppRoutes = () => {
         </ProtectedRoute>
       } />
     </Routes>
+    </Suspense>
   );
 };
 export default AppRoutes;
