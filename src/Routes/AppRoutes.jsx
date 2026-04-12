@@ -23,6 +23,7 @@ import Loader from "../component/layout/loader";
 import { lazy, Suspense } from "react";
 import Sales from "../pages/admin/Sales/Sales";
 import Inventory from "../pages/admin/Inventory/INventory";
+import Claims from "../pages/admin/Claims/Claims";
 
 const AppRoutes = () => {
   return (
@@ -43,6 +44,7 @@ const AppRoutes = () => {
         <Route path="staff" element={<Staff/>}/>
         <Route path="sales" element={<Sales/>}/>
         <Route path="inventory" element={<Inventory/>}/>
+        <Route path="claims" element={<Claims/>}/>
       </Route>
       
       <Route path="/seller/dashboard" element={

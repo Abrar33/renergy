@@ -9,30 +9,31 @@ const Sales = () => {
   ]);
 
   return (
-    <div className="p-8 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-black text-slate-950">Sales History</h1>
-          <button className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-2.5 rounded-xl font-bold hover:bg-slate-50">
-            <Download size={18} /> Export CSV
-          </button>
-        </div>
+    // Removed min-h-screen here, as the Layout component handles height
+    <div className="w-full">
+      {/* Header - Responsive stack */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
+        <h1 className="text-3xl font-black text-slate-950">Sales History</h1>
+        <button className="flex items-center gap-2 bg-white border border-slate-200 px-5 py-2.5 rounded-xl font-bold hover:bg-slate-50 w-full sm:w-auto justify-center">
+          <Download size={18} /> Export CSV
+        </button>
+      </div>
 
-        {/* Filter Bar */}
-        <div className="flex gap-4 mb-6">
-          <div className="flex-1 bg-white p-2 rounded-xl border border-slate-200 flex items-center gap-2">
-            <Search className="text-slate-400 ml-2" size={20} />
-            <input className="w-full outline-none p-1" placeholder="Search by Invoice ID or Customer..." />
-          </div>
-          <button className="flex items-center gap-2 bg-white px-5 py-3 rounded-xl border border-slate-200 font-bold text-slate-600">
-            <Filter size={18} /> Filter Status
-          </button>
+      {/* Filter Bar - Responsive stack */}
+      <div className="flex flex-col md:flex-row gap-4 mb-6">
+        <div className="flex-1 bg-white p-2 rounded-xl border border-slate-200 flex items-center gap-2">
+          <Search className="text-slate-400 ml-2" size={20} />
+          <input className="w-full outline-none p-1" placeholder="Search by Invoice or Customer..." />
         </div>
+        <button className="flex items-center gap-2 bg-white px-5 py-3 rounded-xl border border-slate-200 font-bold text-slate-600 justify-center">
+          <Filter size={18} /> Filter Status
+        </button>
+      </div>
 
-        {/* Sales Table */}
-        <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
-          <table className="w-full text-left">
+      {/* Sales Table Wrapper - Mobile Scrollable */}
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left min-w-[600px]">
             <thead className="bg-slate-50 text-slate-500 text-[10px] uppercase tracking-widest font-bold">
               <tr>
                 <th className="p-6">Invoice ID</th>
@@ -47,7 +48,7 @@ const Sales = () => {
                 <tr key={s.id} className="hover:bg-slate-50">
                   <td className="p-6 font-bold text-slate-900">{s.id}</td>
                   <td className="p-6">{s.customer}</td>
-                  <td className="p-6">{s.date}</td>
+                  <td className="p-6 text-sm">{s.date}</td>
                   <td className="p-6 text-right font-black text-slate-950">Rs. {s.amount}</td>
                   <td className="p-6">
                     <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase ${
