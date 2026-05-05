@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Zap, LayoutDashboard, Package, Users, Settings, LogOut, BarChart3, AlertCircle, Menu, X } from 'lucide-react';
+import { Zap, LayoutDashboard, Package, Users, Settings, LogOut, BarChart3, AlertCircle, Menu, X, ShoppingBag } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
@@ -46,6 +46,12 @@ const Sidebar = () => {
         {/* Navigation */}
         <nav onClick={() => setIsOpen(false)} className="space-y-2 flex-1">
           <NavItem to="/admin/dashboard" icon={<LayoutDashboard size={20}/>} label="Dashboard" active={pathname.includes('/admin/dashboard')} />
+          <NavItem 
+  to="/admin/products" 
+  icon={<ShoppingBag size={20}/>} 
+  label="Products Catalog" 
+  active={pathname.includes('/admin/products')} 
+/>
           <NavItem to="/admin/inventory" icon={<Package size={20}/>} label="Inventory" active={pathname.includes('/admin/inventory')} />
           <NavItem to="/admin/sales" icon={<BarChart3 size={20}/>} label="Sales" active={pathname.includes('/admin/sales')} />
           <NavItem to="/admin/claims" icon={<AlertCircle size={20}/>} label="Warranty Claims" active={pathname.includes('/admin/claims')} />

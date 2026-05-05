@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, ShieldCheck, ShieldX, Download, History, PlusCircle, AlertCircle } from 'lucide-react';
-import { dummyWarranties } from '../../data/dummyWarrenty'; 
+import { dummyWarranties } from '../../services/dummyWarrenty'; 
 import { useNavigate } from 'react-router-dom';
 
 const WarrantyChecker = () => {

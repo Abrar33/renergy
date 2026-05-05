@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from "../../Context/AuthContext";
-import { supabase } from "../../data/supabasClient";
+import { supabase } from "../../services/supabasClient";
 import { useNavigate } from 'react-router-dom';
 import { FileText, AlertTriangle, Send, Inbox, ArrowLeft } from 'lucide-react';
 

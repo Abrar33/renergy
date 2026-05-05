@@ -24,6 +24,8 @@ import { lazy, Suspense } from "react";
 import Sales from "../pages/admin/Sales/Sales";
 import Inventory from "../pages/admin/Inventory/INventory";
 import Claims from "../pages/admin/Claims/Claims";
+import Settings from "../pages/Settings/setting";
+import Products from "../pages/admin/Products/Product";
 
 const AppRoutes = () => {
   return (
@@ -43,8 +45,11 @@ const AppRoutes = () => {
         <Route path="add-product" element={<AddProductWizard />} />
         <Route path="staff" element={<Staff/>}/>
         <Route path="sales" element={<Sales/>}/>
+        <Route path="products" element={<Products/>}/>
+
         <Route path="inventory" element={<Inventory/>}/>
         <Route path="claims" element={<Claims/>}/>
+        <Route path="settings" element={<Settings/>}/>
       </Route>
       
       <Route path="/seller/dashboard" element={

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from '../../../data/supabasClient'; // Ensure this path is correct
+import { supabase } from '../../../services/supabasClient'; 
 import BasicInfoForm from './BasicInfoForm';
 import CategorySpecsForm from './CategoryDetailsForm';
 import InventoryDetailsForm from './inventoryDetailForm';
@@ -7,11 +7,33 @@ import WizardHeader from './WizardHeader';
 
 const AddProductWizard = () => {
   const [step, setStep] = useState(1);
+  const [imageFile, setImageFile] = useState(null); // Local file state
   const [formData, setFormData] = useState({ 
     name: '', sku: '', category: '', brand: '', price: 0, specs: {}, stock: 0, location: '' 
   });
 
   const saveToSupabase = async () => {
+    let imageUrl = null;
+
+    // 0. Handle Image Upload to Storage
+    if (imageFile) {
+      const fileExt = imageFile.name.split('.').pop();
+      const fileName = `${Math.random()}.${fileExt}`;
+      const filePath = `products/${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('product-images') // Ensure this bucket exists in Supabase
+        .upload(filePath, imageFile);
+
+      if (uploadError) return alert("Image upload failed: " + uploadError.message);
+
+      const { data } = supabase.storage
+        .from('product-images')
+        .getPublicUrl(filePath);
+      
+      imageUrl = data.publicUrl;
+    }
+
     // 1. Insert into Products Table
     const { data: newProduct, error: prodError } = await supabase
       .from('products')
@@ -21,7 +43,8 @@ const AddProductWizard = () => {
         category: formData.category, 
         brand: formData.brand,
         price: formData.price, 
-        specifications: formData.specs 
+        specifications: formData.specs,
+        image_url: imageUrl // Saving the link
       }])
       .select().single();
 
@@ -43,7 +66,7 @@ const AddProductWizard = () => {
   return (
     <div className="p-8 bg-slate-50 min-h-screen">
       <div className="max-w-2xl mx-auto">
-        <WizardHeader title="Add New Product" onBack={() => window.location.href = '/dashboard'} />
+        <WizardHeader title="Add New Product" onBack={() => window.location.href = '/admin/inventory'} />
         
         <div className="bg-white p-10 rounded-3xl border border-slate-100 shadow-xl">
           {/* Progress Bar */}
@@ -53,12 +76,34 @@ const AddProductWizard = () => {
             ))}
           </div>
 
-          {step === 1 && <BasicInfoForm data={formData} update={setFormData} onNext={() => setStep(2)} />}
-          {step === 2 && <CategorySpecsForm data={formData} update={setFormData} onBack={() => setStep(1)} onNext={() => setStep(3)} />}
-          {step === 3 && <InventoryDetailsForm data={formData} update={setFormData} onBack={() => setStep(2)} onSave={saveToSupabase} />}
+          {step === 1 && (
+            <BasicInfoForm 
+              data={formData} 
+              update={setFormData} 
+              setImageFile={setImageFile} 
+              onNext={() => setStep(2)} 
+            />
+          )}
+          {step === 2 && (
+            <CategorySpecsForm 
+              data={formData} 
+              update={setFormData} 
+              onBack={() => setStep(1)} 
+              onNext={() => setStep(3)} 
+            />
+          )}
+          {step === 3 && (
+            <InventoryDetailsForm 
+              data={formData} 
+              update={setFormData} 
+              onBack={() => setStep(2)} 
+              onSave={saveToSupabase} 
+            />
+          )}
         </div>
       </div>
     </div>
   );
 };
+
 export default AddProductWizard;
