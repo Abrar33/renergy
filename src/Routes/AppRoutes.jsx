@@ -26,8 +26,11 @@ import Inventory from "../pages/admin/Inventory/INventory";
 import Claims from "../pages/admin/Claims/Claims";
 import Settings from "../pages/Settings/setting";
 import Products from "../pages/admin/Products/Product";
+import ProductDetails from "../pages/admin/Products/ProductDetailPage";
+import EditProductWizard from "../component/common/admin/EditProduct";
 
 const AppRoutes = () => {
+  
   return (
     <Suspense fallback={<Loader />}>
     <Routes>
@@ -43,10 +46,11 @@ const AppRoutes = () => {
       }>
         <Route path="dashboard" element={<Dashboard />} />
         <Route path="add-product" element={<AddProductWizard />} />
+        <Route element={<EditProductWizard/>} path="/admin/edit-product/:id" />
         <Route path="staff" element={<Staff/>}/>
         <Route path="sales" element={<Sales/>}/>
         <Route path="products" element={<Products/>}/>
-
+        <Route path="product/:id" element={<ProductDetails />} />
         <Route path="inventory" element={<Inventory/>}/>
         <Route path="claims" element={<Claims/>}/>
         <Route path="settings" element={<Settings/>}/>

@@ -120,7 +120,8 @@ const Products = () => {
 
                   {activeMenu === p.id && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-2xl border border-slate-100 py-2 z-50">
-                      <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
+                      <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition"
+                        onClick={() => navigate(`/admin/product/${p.id}`)}>
                         <ExternalLink size={14}/> View Details
                       </button>
                       <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-700 hover:bg-slate-50 transition">
